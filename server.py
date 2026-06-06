@@ -327,7 +327,9 @@ class InventoryHandler(BaseHTTPRequestHandler):
 
 def main():
     init_database()
-    host = os.environ.get("HOST", "127.0.0.1")
+    host = os.environ.get("HOST", "127.0.0.1").strip()
+    if host not in ("127.0.0.1", "0.0.0.0", "localhost"):
+        host = "0.0.0.0"
     port = int(os.environ.get("PORT", "8000"))
     server = ThreadingHTTPServer((host, port), InventoryHandler)
     print(f"現貨庫存網站已啟動：http://{host}:{port}")
