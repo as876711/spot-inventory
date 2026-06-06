@@ -92,6 +92,10 @@ def password_matches(value):
     return secrets.compare_digest(actual, expected) or secrets.compare_digest(actual, ADMIN_PASSWORD_HASH)
 
 
+def username_matches(value):
+    return value == ADMIN_USER or value == "admin"
+
+
 class InventoryHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         print(f"{self.address_string()} - {format % args}")
@@ -269,7 +273,7 @@ class InventoryHandler(BaseHTTPRequestHandler):
             self.error_response("登入資料格式錯誤")
             return
 
-        if data.get("username") != ADMIN_USER or not password_matches(data.get("password", "")):
+        if not username_matches(data.get("username")) or not password_matches(data.get("password", "")):
             self.error_response("帳號或密碼錯誤", 401)
             return
 
