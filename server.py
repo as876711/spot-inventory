@@ -14,7 +14,8 @@ from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR / "public"
-DATA_ROOT = Path(os.environ.get("DATA_ROOT", BASE_DIR))
+DEFAULT_DATA_ROOT = Path("/var/data") if Path("/var/data").exists() else BASE_DIR
+DATA_ROOT = Path(os.environ.get("DATA_ROOT", DEFAULT_DATA_ROOT))
 UPLOAD_DIR = DATA_ROOT / "uploads"
 DATA_DIR = DATA_ROOT / "data"
 DB_PATH = DATA_DIR / "inventory.sqlite"
@@ -335,7 +336,8 @@ class InventoryHandler(BaseHTTPRequestHandler):
 
 def main():
     init_database()
-    host = os.environ.get("HOST", "127.0.0.1").strip()
+    default_host = "0.0.0.0" if os.environ.get("PORT") else "127.0.0.1"
+    host = os.environ.get("HOST", default_host).strip()
     if host not in ("127.0.0.1", "0.0.0.0", "localhost"):
         host = "0.0.0.0"
     port = int(os.environ.get("PORT", "8000"))

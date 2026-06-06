@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: spot-inventory
+    name: wowma
     runtime: python
     plan: starter
     buildCommand: pip install -r requirements.txt
