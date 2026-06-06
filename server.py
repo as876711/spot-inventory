@@ -3,15 +3,13 @@ import json
 import mimetypes
 import os
 import secrets
-import shutil
 import sqlite3
 import uuid
 from datetime import datetime, timezone
 from http import cookies
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs, urlparse
-import cgi
+from urllib.parse import urlparse
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -284,17 +282,22 @@ class InventoryHandler(BaseHTTPRequestHandler):
         self.json_response({"authenticated": False}, headers={"Set-Cookie": header})
 
     def handle_upload(self):
-        form = cgi.FieldStorage(
-            fp=self.rfile,
-            headers=self.headers,
-            environ={"REQUEST_METHOD": "POST", "CONTENT_TYPE": self.headers.get("Content-Type", "")},
-        )
-        field = form["image"] if "image" in form else None
-        if field is None or not field.filename:
+        content_type = self.headers.get("Content-Type", "")
+        boundary_marker = "boundary="
+        if "multipart/form-data" not in content_type or boundary_marker not in content_type:
+            self.error_response("上傳格式錯誤")
+            return
+
+        boundary = content_type.split(boundary_marker, 1)[1].strip().strip('"')
+        length = int(self.headers.get("Content-Length", "0"))
+        body = self.rfile.read(length)
+        file_part = self.extract_upload_part(body, boundary)
+        if file_part is None:
             self.error_response("請選擇圖片")
             return
 
-        ext = Path(field.filename).suffix.lower()
+        filename, file_bytes = file_part
+        ext = Path(filename).suffix.lower()
         if ext not in (".jpg", ".jpeg", ".png", ".webp", ".gif"):
             self.error_response("圖片格式僅支援 jpg、png、webp、gif")
             return
@@ -302,8 +305,24 @@ class InventoryHandler(BaseHTTPRequestHandler):
         filename = f"{uuid.uuid4().hex}{ext}"
         target = UPLOAD_DIR / filename
         with target.open("wb") as output:
-            shutil.copyfileobj(field.file, output)
+            output.write(file_bytes)
         self.json_response({"url": f"/uploads/{filename}"}, 201)
+
+    def extract_upload_part(self, body, boundary):
+        marker = f"--{boundary}".encode("utf-8")
+        for raw_part in body.split(marker):
+            part = raw_part.strip(b"\r\n")
+            if not part or part == b"--" or b"\r\n\r\n" not in part:
+                continue
+
+            header_bytes, file_bytes = part.split(b"\r\n\r\n", 1)
+            headers = header_bytes.decode("utf-8", errors="ignore")
+            if 'name="image"' not in headers or 'filename="' not in headers:
+                continue
+
+            filename = headers.split('filename="', 1)[1].split('"', 1)[0]
+            return filename, file_bytes.rstrip(b"\r\n")
+        return None
 
 
 def main():
