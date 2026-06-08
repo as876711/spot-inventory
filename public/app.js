@@ -88,7 +88,6 @@ function renderProducts() {
         <div class="product-body">
           <div class="product-meta">
             <span>${escapeHtml(item.category)}</span>
-            <span>${escapeHtml(item.createdAt)}</span>
           </div>
           <h3 class="product-title">${escapeHtml(item.name)}</h3>
           <p class="condition">${escapeHtml(item.condition)}</p>
