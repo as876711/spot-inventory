@@ -17,7 +17,7 @@
     <nav class="site-nav" aria-label="主要導覽">
       <a href="#items">商品</a>
       <a href="#trade">交易</a>
-      <a href="#admin">後台</a>
+      <a href="./admin.html">後台管理</a>
     </nav>
   </header>
 
@@ -81,87 +81,14 @@
       <a class="button primary" id="tradeLineLink" href="#" target="_blank" rel="noreferrer">加 LINE 詢問</a>
     </section>
 
-    <section id="admin" class="section admin-section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Inventory Admin</p>
-          <h2>庫存後台</h2>
-        </div>
-        <button class="button ghost" id="logoutButton" type="button" hidden>登出</button>
-      </div>
-
-      <form id="loginForm" class="login-panel">
-        <label>
-          帳號
-          <input id="usernameInput" autocomplete="username" required value="admin">
-        </label>
-        <label>
-          密碼
-          <input id="passwordInput" type="password" autocomplete="current-password" required placeholder="請輸入後台密碼">
-        </label>
-        <button class="button primary" type="submit">登入後台</button>
-        <p id="loginMessage" class="form-message"></p>
-      </form>
-
-      <div id="adminPanel" class="admin-layout" hidden>
-        <form id="itemForm" class="admin-form">
-          <input type="hidden" id="itemId">
-          <label>
-            商品名稱
-            <input id="nameInput" required maxlength="60" placeholder="例如：實木邊桌">
-          </label>
-          <div class="form-row">
-            <label>
-              分類
-              <select id="categoryInput">
-                <option>家具</option>
-                <option>家電</option>
-                <option>生活</option>
-                <option>數位</option>
-              </select>
-            </label>
-            <label>
-              狀態
-              <select id="statusInput">
-                <option value="available">可售</option>
-                <option value="reserved">保留</option>
-                <option value="sold">售出</option>
-              </select>
-            </label>
-          </div>
-          <div class="form-row">
-            <label>
-              價格
-              <input id="priceInput" required type="number" min="0" step="100" placeholder="1200">
-            </label>
-            <label>
-              圖片上傳
-              <input id="uploadInput" type="file" accept="image/*">
-            </label>
-          </div>
-          <label>
-            圖片網址
-            <input id="imageInput" required placeholder="/uploads/example.jpg 或 https://...">
-          </label>
-          <label>
-            品況描述
-            <textarea id="conditionInput" required rows="3" maxlength="180" placeholder="九成新，邊角有正常使用痕跡。"></textarea>
-          </label>
-          <p id="formMessage" class="form-message"></p>
-          <div class="form-actions">
-            <button class="button primary" type="submit">儲存商品</button>
-            <button class="button ghost" id="cancelEditButton" type="button">取消編輯</button>
-          </div>
-        </form>
-
-        <div class="admin-list" id="adminList" aria-label="後台商品清單"></div>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
     <span>現貨庫存</span>
-    <a id="footerLineLink" href="#" target="_blank" rel="noreferrer">LINE 聯絡</a>
+    <div class="footer-links">
+      <a id="footerLineLink" href="#" target="_blank" rel="noreferrer">LINE 聯絡</a>
+      <a href="./admin.html">後台管理</a>
+    </div>
   </footer>
 
   <script src="./app.js"></script>
