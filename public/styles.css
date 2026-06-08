@@ -242,6 +242,7 @@ textarea { padding: 12px; resize: vertical; }
   border-radius: 8px;
   box-shadow: 0 10px 28px rgba(46, 43, 36, 0.08);
 }
+.product-card.is-sold img { filter: grayscale(0.55); opacity: 0.68; }
 .product-image { position: relative; aspect-ratio: 4 / 3; background: #e7e2d6; }
 .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .status {
@@ -298,7 +299,9 @@ textarea { padding: 12px; resize: vertical; }
   display: inline-flex;
   align-items: center;
 }
-.line-link.disabled { pointer-events: none; background: #b9b6ad; }
+.line-link.secondary { background: #5f6f86; }
+.line-link:hover { background: var(--accent-dark); }
+.line-link.secondary:hover { background: #46556b; }
 .empty-state { padding: 40px 0; color: var(--muted); text-align: center; }
 
 .trade-section {
@@ -311,6 +314,22 @@ textarea { padding: 12px; resize: vertical; }
 }
 .trade-copy { max-width: 760px; }
 .trade-copy p:last-child { color: rgba(255, 255, 255, 0.78); line-height: 1.8; }
+.trade-steps {
+  display: grid;
+  gap: 14px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.trade-steps li {
+  display: grid;
+  grid-template-columns: 116px 1fr;
+  gap: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+.trade-steps strong { color: white; }
+.trade-steps span { color: rgba(255, 255, 255, 0.78); line-height: 1.75; }
 
 .admin-section, .admin-page { background: #f3eee3; }
 .admin-page { min-height: calc(100svh - 152px); }
@@ -409,6 +428,7 @@ textarea { padding: 12px; resize: vertical; }
     display: grid;
     grid-template-columns: 1fr;
   }
+  .trade-steps li { grid-template-columns: 1fr; gap: 6px; }
   .search { min-width: 0; }
   .site-footer { align-items: flex-start; flex-direction: column; gap: 12px; padding-block: 18px; }
   .footer-links { justify-content: flex-start; }

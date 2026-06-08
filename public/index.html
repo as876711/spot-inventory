@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>現貨庫存 | 閒置物品選物</title>
-  <meta name="description" content="精選閒置物品現貨庫存，查看品況、價格與交易資訊，直接用 LINE 詢問。">
+  <title>現貨選物庫 | LINE 詢問保留</title>
+  <meta name="description" content="現貨選物清單，商品皆標示照片、價格、品況與狀態。看到喜歡的商品後，可直接用 LINE 詢問與保留。">
   <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -12,11 +12,11 @@
   <header class="site-header">
     <a class="brand" href="#top" aria-label="回到首頁">
       <span class="brand-mark">庫</span>
-      <span>現貨庫存</span>
+      <span>現貨選物庫</span>
     </a>
     <nav class="site-nav" aria-label="主要導覽">
       <a href="#items">商品</a>
-      <a href="#trade">交易</a>
+      <a href="#trade">交易說明</a>
       <a href="./admin.html">登入</a>
     </nav>
   </header>
@@ -24,11 +24,12 @@
   <main id="top">
     <section class="hero">
       <div class="hero-content">
-        <h1>現貨庫存</h1>
-        <p class="hero-copy">整理生活裡用不到、但仍值得被好好使用的物品。每件都標示品況、價格與狀態，看中後直接用 LINE 詢問。</p>
+        <p class="eyebrow">Ready Stock</p>
+        <h1>現貨選物庫</h1>
+        <p class="hero-copy">看到喜歡的商品後，直接點 LINE 詢問這件。我會確認商品狀態、保留方式、付款與出貨細節。</p>
         <div class="hero-actions">
-          <a class="button primary" href="#items">查看商品</a>
-          <a class="button ghost" id="heroLineLink" href="#" target="_blank" rel="noreferrer">LINE 詢問</a>
+          <a class="button primary" href="#items">查看現貨</a>
+          <a class="button ghost" id="heroLineLink" href="#" target="_blank" rel="noreferrer">LINE 詢問現貨</a>
         </div>
       </div>
     </section>
@@ -81,7 +82,20 @@
       <div class="trade-copy">
         <p class="eyebrow">Trade Notes</p>
         <h2>交易說明</h2>
-        <p>所有商品皆為現貨閒置品，品況以照片與文字描述為準。看中商品後請用 LINE 傳送商品名稱，後續確認細節、保留與交付方式。</p>
+        <ol class="trade-steps">
+          <li>
+            <strong>詢問與保留</strong>
+            <span>看到喜歡的商品後，點商品卡上的 LINE 詢問這件。確認仍可售後才會替你保留，保留時間以 LINE 回覆為準。</span>
+          </li>
+          <li>
+            <strong>付款方式</strong>
+            <span>LINE 中確認總金額、付款方式與付款期限。商品以完成付款者優先。</span>
+          </li>
+          <li>
+            <strong>出貨規則</strong>
+            <span>完成付款後安排寄出或約定交付方式。運費、寄送方式與包裝需求會在 LINE 中一併確認。</span>
+          </li>
+        </ol>
       </div>
       <a class="button primary" id="tradeLineLink" href="#" target="_blank" rel="noreferrer">加 LINE 詢問</a>
     </section>
@@ -89,7 +103,7 @@
   </main>
 
   <footer class="site-footer">
-    <span>現貨庫存</span>
+    <span>現貨選物庫</span>
     <div class="footer-links">
       <a id="footerLineLink" href="#" target="_blank" rel="noreferrer">LINE 聯絡</a>
       <a href="./admin.html">登入</a>

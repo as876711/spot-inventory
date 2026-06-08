@@ -1,4 +1,74 @@
-const lineUrl = "https://line.me/R/ti/p/@yourline";
+const lineId = "@334lnlsn";
+const lineUrl = `https://line.me/R/oaMessage/${encodeURIComponent(lineId)}`;
+
+const sampleItems = [
+  {
+    id: "sample-1",
+    name: "三麗鷗造型吊飾",
+    category: "三麗鷗",
+    status: "available",
+    price: 180,
+    image: "./images/item-1.jpg",
+    tags: ["吊飾", "可售", "近新"],
+    condition: "近新品況，外觀乾淨，無明顯污漬或破損。",
+    createdAt: "2026-06-01T10:00:00+08:00"
+  },
+  {
+    id: "sample-2",
+    name: "吉伊卡哇小物收納包",
+    category: "吉伊卡哇",
+    status: "available",
+    price: 220,
+    image: "./images/item-2.jpg",
+    tags: ["收納", "小物", "現貨"],
+    condition: "少量使用痕跡，拉鍊正常，適合收納鑰匙或耳機。",
+    createdAt: "2026-05-28T14:30:00+08:00"
+  },
+  {
+    id: "sample-3",
+    name: "寶可夢迷你公仔",
+    category: "寶可夢",
+    status: "reserved",
+    price: 150,
+    image: "./images/item-3.jpg",
+    tags: ["公仔", "保留中"],
+    condition: "展示品，底部有輕微使用痕跡，整體保存良好。",
+    createdAt: "2026-05-22T09:15:00+08:00"
+  },
+  {
+    id: "sample-4",
+    name: "角色貼紙組",
+    category: "其他",
+    status: "available",
+    price: 80,
+    image: "./images/item-4.jpg",
+    tags: ["貼紙", "全新"],
+    condition: "未使用，外包裝完整，適合手帳或卡片裝飾。",
+    createdAt: "2026-05-18T18:20:00+08:00"
+  },
+  {
+    id: "sample-5",
+    name: "毛絨玩偶吊牌款",
+    category: "其他",
+    status: "sold",
+    price: 320,
+    image: "./images/item-5.jpg",
+    tags: ["玩偶", "已售出"],
+    condition: "已售出，保留紀錄供參考，可詢問是否有類似商品。",
+    createdAt: "2026-05-12T11:40:00+08:00"
+  },
+  {
+    id: "sample-6",
+    name: "小卡與明信片套組",
+    category: "其他",
+    status: "available",
+    price: 120,
+    image: "./images/item-6.jpg",
+    tags: ["小卡", "紙品", "可售"],
+    condition: "收藏保存，邊角平整，套組不拆售。",
+    createdAt: "2026-05-04T16:00:00+08:00"
+  }
+];
 
 const statusLabels = {
   available: "可售",
@@ -21,7 +91,7 @@ let activeTag = "all";
 let items = [];
 
 lineLinks.forEach((link) => {
-  link.href = lineUrl;
+  link.href = buildLineLink("現貨商品");
 });
 
 function formatPrice(value) {
@@ -33,8 +103,8 @@ function formatPrice(value) {
 }
 
 function buildLineLink(itemName) {
-  const message = encodeURIComponent(`你好，我想詢問「${itemName}」是否還在。`);
-  return `${lineUrl}?text=${message}`;
+  const message = encodeURIComponent(`你好，我想詢問「${itemName}」是否還有現貨，請問可以保留嗎？`);
+  return `${lineUrl}/?${message}`;
 }
 
 function escapeHtml(value) {
@@ -58,8 +128,12 @@ async function api(path, options = {}) {
 }
 
 async function loadItems() {
-  const data = await api("/api/items");
-  items = data.items;
+  try {
+    const data = await api("/api/items");
+    items = Array.isArray(data.items) && data.items.length > 0 ? data.items : sampleItems;
+  } catch (error) {
+    items = sampleItems;
+  }
   renderTagFilters();
   renderProducts();
 }
@@ -104,7 +178,7 @@ function renderProducts() {
       .map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`)
       .join("");
     return `
-      <article class="product-card">
+      <article class="product-card ${item.status === "sold" ? "is-sold" : ""}">
         <div class="product-image">
           <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy">
           <span class="status ${item.status}">${statusLabels[item.status]}</span>
@@ -118,7 +192,7 @@ function renderProducts() {
           <p class="condition">${escapeHtml(item.condition)}</p>
           <div class="price-row">
             <span class="price">${formatPrice(Number(item.price))}</span>
-            <a class="line-link ${isUnavailable ? "disabled" : ""}" href="${buildLineLink(item.name)}" target="_blank" rel="noreferrer">${isUnavailable ? "已不可售" : "LINE 詢問"}</a>
+            <a class="line-link ${isUnavailable ? "secondary" : ""}" href="${buildLineLink(item.name)}" target="_blank" rel="noreferrer">LINE 詢問這件</a>
           </div>
         </div>
       </article>
@@ -156,7 +230,4 @@ tagFilters.addEventListener("click", (event) => {
 searchInput.addEventListener("input", renderProducts);
 sortSelect.addEventListener("change", renderProducts);
 
-loadItems().catch((error) => {
-  emptyState.hidden = false;
-  emptyState.textContent = error.message;
-});
+loadItems();
