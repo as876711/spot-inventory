@@ -30,12 +30,12 @@ SESSION_COOKIE = "spot_inventory_session"
 SESSIONS = {}
 
 SEED_ITEMS = [
-    ("實木邊桌", "家具", "available", 1200, "九成新，桌面有輕微使用痕跡，適合沙發旁或床邊。", "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=900&q=80", "2026-06-01"),
-    ("小型空氣清淨機", "家電", "reserved", 1800, "功能正常，濾網需自行更換，外殼乾淨無明顯刮痕。", "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=80", "2026-06-02"),
-    ("陶瓷餐盤組", "生活", "available", 600, "一組四入，少用無缺角，適合日常餐桌搭配。", "https://images.unsplash.com/photo-1603199506016-b9a594b593c0?auto=format&fit=crop&w=900&q=80", "2026-06-03"),
-    ("藍牙鍵盤", "數位", "available", 750, "按鍵正常，支援多裝置切換，附原盒不含電池。", "https://images.unsplash.com/photo-1584727638096-042c45049ebe?auto=format&fit=crop&w=900&q=80", "2026-06-04"),
-    ("復古落地燈", "家具", "sold", 1500, "燈罩保存良好，已售出，保留作為參考款式。", "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80", "2026-05-28"),
-    ("手沖咖啡壺", "生活", "available", 480, "使用次數少，壺身乾淨，適合入門手沖使用。", "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=900&q=80", "2026-06-05"),
+    ("實木邊桌", "三麗鷗", "available", 1200, "九成新，桌面有輕微使用痕跡，適合沙發旁或床邊。", "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=900&q=80", "2026-06-01"),
+    ("小型空氣清淨機", "三麗鷗", "reserved", 1800, "功能正常，濾網需自行更換，外殼乾淨無明顯刮痕。", "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=80", "2026-06-02"),
+    ("陶瓷餐盤組", "三麗鷗", "available", 600, "一組四入，少用無缺角，適合日常餐桌搭配。", "https://images.unsplash.com/photo-1603199506016-b9a594b593c0?auto=format&fit=crop&w=900&q=80", "2026-06-03"),
+    ("藍牙鍵盤", "三麗鷗", "available", 750, "按鍵正常，支援多裝置切換，附原盒不含電池。", "https://images.unsplash.com/photo-1584727638096-042c45049ebe?auto=format&fit=crop&w=900&q=80", "2026-06-04"),
+    ("復古落地燈", "三麗鷗", "sold", 1500, "燈罩保存良好，已售出，保留作為參考款式。", "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80", "2026-05-28"),
+    ("手沖咖啡壺", "三麗鷗", "available", 480, "使用次數少，壺身乾淨，適合入門手沖使用。", "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=900&q=80", "2026-06-05"),
 ]
 
 
@@ -72,6 +72,13 @@ def init_database():
                 """,
                 [(str(uuid.uuid4()), *item) for item in SEED_ITEMS],
             )
+        conn.execute(
+            """
+            UPDATE items
+            SET category = '三麗鷗'
+            WHERE category IN ('家具', '家電', '生活', '數位')
+            """
+        )
 
 
 def item_from_row(row):
