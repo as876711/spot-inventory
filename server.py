@@ -206,7 +206,7 @@ class InventoryHandler(BaseHTTPRequestHandler):
         self.json_response({"items": [item_from_row(row) for row in rows]})
 
     def validate_item(self, data):
-        required = ["name", "category", "status", "price", "condition", "image"]
+        required = ["name", "category", "status", "price", "image"]
         if any(not str(data.get(key, "")).strip() for key in required):
             raise ValueError("請填寫完整商品資料")
         if data["status"] not in ("available", "reserved", "sold"):
