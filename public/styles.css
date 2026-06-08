@@ -255,6 +255,24 @@ textarea { padding: 12px; resize: vertical; }
   font-size: 13px;
 }
 .product-title { margin: 8px 0; font-size: 20px; }
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 9px;
+  color: var(--accent-dark);
+  background: #eef4ff;
+  border: 1px solid #cddcff;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
 .condition { min-height: 54px; margin: 0 0 16px; color: var(--muted); line-height: 1.65; }
 .price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .price { font-size: 22px; font-weight: 900; }

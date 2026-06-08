@@ -58,11 +58,15 @@ def init_database():
                 status TEXT NOT NULL CHECK(status IN ('available', 'reserved', 'sold')),
                 price INTEGER NOT NULL CHECK(price >= 0),
                 condition TEXT NOT NULL,
+                tags TEXT NOT NULL DEFAULT '',
                 image_url TEXT NOT NULL,
                 created_at TEXT NOT NULL
             )
             """
         )
+        columns = {row["name"] for row in conn.execute("PRAGMA table_info(items)").fetchall()}
+        if "tags" not in columns:
+            conn.execute("ALTER TABLE items ADD COLUMN tags TEXT NOT NULL DEFAULT ''")
         count = conn.execute("SELECT COUNT(*) FROM items").fetchone()[0]
         if count == 0:
             conn.executemany(
@@ -82,6 +86,7 @@ def init_database():
 
 
 def item_from_row(row):
+    tags = [tag for tag in row["tags"].split(",") if tag]
     return {
         "id": row["id"],
         "name": row["name"],
@@ -89,6 +94,7 @@ def item_from_row(row):
         "status": row["status"],
         "price": row["price"],
         "condition": row["condition"],
+        "tags": tags,
         "image": row["image_url"],
         "createdAt": row["created_at"],
     }
@@ -221,12 +227,21 @@ class InventoryHandler(BaseHTTPRequestHandler):
         price = int(data["price"])
         if price < 0:
             raise ValueError("價格不可小於 0")
+        raw_tags = data.get("tags", [])
+        if isinstance(raw_tags, str):
+            raw_tags = raw_tags.replace("，", ",").split(",")
+        tags = []
+        for raw_tag in raw_tags:
+            tag = str(raw_tag).strip()
+            if tag and tag not in tags:
+                tags.append(tag)
         return {
             "name": str(data["name"]).strip(),
             "category": str(data["category"]).strip(),
             "status": data["status"],
             "price": price,
-            "condition": str(data["condition"]).strip(),
+            "condition": str(data.get("condition", "")).strip(),
+            "tags": tags[:12],
             "image": str(data["image"]).strip(),
         }
 
@@ -242,10 +257,10 @@ class InventoryHandler(BaseHTTPRequestHandler):
         with db() as conn:
             conn.execute(
                 """
-                INSERT INTO items (id, name, category, status, price, condition, image_url, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO items (id, name, category, status, price, condition, tags, image_url, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (item_id, item["name"], item["category"], item["status"], item["price"], item["condition"], item["image"], created_at),
+                (item_id, item["name"], item["category"], item["status"], item["price"], item["condition"], ",".join(item["tags"]), item["image"], created_at),
             )
         self.json_response({"id": item_id, "createdAt": created_at}, 201)
 
@@ -260,10 +275,10 @@ class InventoryHandler(BaseHTTPRequestHandler):
             cursor = conn.execute(
                 """
                 UPDATE items
-                SET name = ?, category = ?, status = ?, price = ?, condition = ?, image_url = ?
+                SET name = ?, category = ?, status = ?, price = ?, condition = ?, tags = ?, image_url = ?
                 WHERE id = ?
                 """,
-                (item["name"], item["category"], item["status"], item["price"], item["condition"], item["image"], item_id),
+                (item["name"], item["category"], item["status"], item["price"], item["condition"], ",".join(item["tags"]), item["image"], item_id),
             )
         if cursor.rowcount == 0:
             self.not_found()
