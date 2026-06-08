@@ -208,6 +208,17 @@ textarea { padding: 12px; resize: vertical; }
   gap: 8px;
   margin-bottom: 22px;
 }
+.filter-group {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.filter-group .filters { margin-bottom: 0; }
+.filter-label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+}
 .filter {
   min-height: 38px;
   padding: 0 14px;

@@ -10,12 +10,14 @@ const grid = document.querySelector("#productGrid");
 const emptyState = document.querySelector("#emptyState");
 const searchInput = document.querySelector("#searchInput");
 const sortSelect = document.querySelector("#sortSelect");
-const filterButtons = document.querySelectorAll(".filter");
+const filterButtons = document.querySelectorAll("[data-filter]");
+const tagFilters = document.querySelector("#tagFilters");
 const lineLinks = ["#heroLineLink", "#tradeLineLink", "#footerLineLink"]
   .map((selector) => document.querySelector(selector))
   .filter(Boolean);
 
 let activeFilter = "all";
+let activeTag = "all";
 let items = [];
 
 lineLinks.forEach((link) => {
@@ -58,15 +60,34 @@ async function api(path, options = {}) {
 async function loadItems() {
   const data = await api("/api/items");
   items = data.items;
+  renderTagFilters();
   renderProducts();
+}
+
+function getAllTags() {
+  return [...new Set(items.flatMap((item) => item.tags || []))]
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, "zh-Hant"));
+}
+
+function renderTagFilters() {
+  const tags = getAllTags();
+  if (activeTag !== "all" && !tags.includes(activeTag)) activeTag = "all";
+  tagFilters.innerHTML = [
+    `<button class="filter tag-filter ${activeTag === "all" ? "active" : ""}" data-tag="all" type="button">全部標籤</button>`,
+    ...tags.map((tag) => `
+      <button class="filter tag-filter ${activeTag === tag ? "active" : ""}" data-tag="${escapeHtml(tag)}" type="button">${escapeHtml(tag)}</button>
+    `)
+  ].join("");
 }
 
 function getVisibleItems() {
   const query = searchInput.value.trim().toLowerCase();
   const sorted = [...items].filter((item) => {
     const matchFilter = activeFilter === "all" || item.category === activeFilter;
+    const matchTag = activeTag === "all" || (item.tags || []).includes(activeTag);
     const haystack = `${item.name} ${item.category} ${(item.tags || []).join(" ")} ${item.condition} ${statusLabels[item.status]}`.toLowerCase();
-    return matchFilter && haystack.includes(query);
+    return matchFilter && matchTag && haystack.includes(query);
   });
 
   if (sortSelect.value === "priceAsc") sorted.sort((a, b) => a.price - b.price);
@@ -121,6 +142,15 @@ filterButtons.forEach((button) => {
     activeFilter = button.dataset.filter;
     renderProducts();
   });
+});
+
+tagFilters.addEventListener("click", (event) => {
+  const button = event.target.closest(".tag-filter");
+  if (!button) return;
+  tagFilters.querySelectorAll(".tag-filter").forEach((item) => item.classList.remove("active"));
+  button.classList.add("active");
+  activeTag = button.dataset.tag;
+  renderProducts();
 });
 
 searchInput.addEventListener("input", renderProducts);
