@@ -135,7 +135,7 @@ function getVisibleItems() {
   const query = searchInput.value.trim().toLowerCase();
   const sorted = [...items].filter((item) => {
     const matchFilter = activeFilter === "all" || item.category === activeFilter;
-    const haystack = `${item.name} ${item.category} ${(item.tags || []).join(" ")} ${item.condition} ${statusLabels[item.status]}`.toLowerCase();
+    const haystack = `${item.name} ${item.category} ${item.condition} ${statusLabels[item.status]}`.toLowerCase();
     return matchFilter && haystack.includes(query);
   });
 
@@ -149,9 +149,6 @@ function renderProducts() {
   const visibleItems = getVisibleItems();
   grid.innerHTML = visibleItems.map((item) => {
     const isUnavailable = item.status !== "available";
-    const tags = (item.tags || [])
-      .map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`)
-      .join("");
     return `
       <article class="product-card ${item.status === "sold" ? "is-sold" : ""}">
         <div class="product-image">
@@ -163,7 +160,6 @@ function renderProducts() {
             <span>${escapeHtml(item.category)}</span>
           </div>
           <h3 class="product-title">${escapeHtml(item.name)}</h3>
-          ${tags ? `<div class="tag-list">${tags}</div>` : ""}
           <p class="condition">${escapeHtml(item.condition)}</p>
           <div class="price-row">
             <span class="price">${formatPrice(Number(item.price))}</span>

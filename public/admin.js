@@ -31,13 +31,6 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-function parseTags(value) {
-  return value
-    .split(/[,，]/)
-    .map((tag) => tag.trim())
-    .filter((tag, index, tags) => tag && tags.indexOf(tag) === index);
-}
-
 async function api(path, options = {}) {
   const response = await fetch(path, {
     credentials: "same-origin",
@@ -67,23 +60,19 @@ function renderAdminList() {
     return;
   }
 
-  adminList.innerHTML = items.map((item) => {
-    const tags = (item.tags || []).map((tag) => escapeHtml(tag)).join(", ");
-    return `
+  adminList.innerHTML = items.map((item) => `
       <article class="admin-item">
         <img src="${escapeHtml(item.image)}" alt="">
         <div>
           <h3>${escapeHtml(item.name)}</h3>
           <p>${escapeHtml(item.category)} · ${statusLabels[item.status]} · ${formatPrice(Number(item.price))}</p>
-          ${tags ? `<p>標籤：${tags}</p>` : ""}
         </div>
         <div class="admin-actions">
           <button class="icon-button" type="button" title="編輯 ${escapeHtml(item.name)}" data-edit="${item.id}">✎</button>
           <button class="icon-button danger" type="button" title="刪除 ${escapeHtml(item.name)}" data-delete="${item.id}">×</button>
         </div>
       </article>
-    `;
-  }).join("");
+    `).join("");
 }
 
 function renderAuthState() {
@@ -157,7 +146,6 @@ form.addEventListener("submit", async (event) => {
     status: document.querySelector("#statusInput").value,
     price: Number(document.querySelector("#priceInput").value),
     image: imageInput.value.trim(),
-    tags: parseTags(document.querySelector("#tagsInput").value),
     condition: document.querySelector("#conditionInput").value.trim()
   };
 
@@ -186,7 +174,6 @@ adminList.addEventListener("click", async (event) => {
     document.querySelector("#statusInput").value = item.status;
     document.querySelector("#priceInput").value = item.price;
     imageInput.value = item.image;
-    document.querySelector("#tagsInput").value = (item.tags || []).join(", ");
     document.querySelector("#conditionInput").value = item.condition;
     form.scrollIntoView({ behavior: "smooth", block: "center" });
   }
