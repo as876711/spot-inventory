@@ -56,6 +56,13 @@ h1, h2, p { overflow-wrap: anywhere; }
   border-radius: 6px;
 }
 
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
 .site-nav {
   display: flex;
   gap: 22px;
@@ -374,6 +381,17 @@ textarea { padding: 12px; resize: vertical; }
   border-top: 1px solid var(--line);
 }
 .site-footer span { color: var(--ink); font-weight: 900; }
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.footer-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
 .footer-links {
   display: flex;
   flex-wrap: wrap;

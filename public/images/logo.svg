@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="wowma logo">
+  <rect width="512" height="512" fill="white"/>
+  <g transform="translate(82 82)">
+    <path d="M89 173c0-48 39-87 87-87h173c48 0 87 39 87 87v150c0 48-39 87-87 87H176c-48 0-87-39-87-87Z" fill="#9ccfc2"/>
+    <path d="M72 154c0-48 39-87 87-87h173c48 0 87 39 87 87v150c0 48-39 87-87 87H159c-48 0-87-39-87-87Z" fill="none" stroke="#241817" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M243 70c-18-54-65-94-104-88-31 5-43 36-28 62 17 30 67 49 132 56Z" fill="white" stroke="#241817" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M255 70c23-52 73-86 111-75 30 9 39 40 20 64-22 28-73 41-138 40Z" fill="white" stroke="#241817" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M145 83c51 14 112 20 154 0" fill="none" stroke="#241817" stroke-width="11" stroke-linecap="round"/>
+    <path d="M249 82c39 28 88 43 137 39" fill="none" stroke="#241817" stroke-width="11" stroke-linecap="round"/>
+    <path d="M248 82v309" fill="none" stroke="#241817" stroke-width="11" stroke-linecap="round"/>
+
+    <path d="M219 270c-12 56-81 53-128 26-56-31-81-90-58-134 25-48 90-62 141-34 44 24 55 74 45 142Z" fill="#f5dc4c"/>
+    <path d="M166 126c-58 19-93 79-78 133 14 50 65 73 100 42 22-20 13-60 17-98 3-31 11-63-39-77Z" fill="none" stroke="#241817" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M189 288c17 23 55 33 85 11" fill="none" stroke="#241817" stroke-width="11" stroke-linecap="round"/>
+    <path d="M212 226c12 18 27 20 41 4" fill="none" stroke="#241817" stroke-width="10" stroke-linecap="round"/>
+
+    <path d="M248 219c20-41 55-65 93-74 9-28 19-43 39-43 19 0 31 20 30 56 31-2 57 8 72 32 19 30 9 72-26 94-36 23-91 18-132-12-20-15-45-38-76-53Z" fill="#d7ae5d" stroke="#241817" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="340" cy="180" r="7" fill="#241817"/>
+    <circle cx="386" cy="203" r="7" fill="#241817"/>
+    <path d="M304 215c15-12 36-13 54 0" fill="none" stroke="#241817" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="347" cy="238" rx="22" ry="15" fill="white" stroke="#241817" stroke-width="9"/>
+    <path d="M323 235c-23-2-44-10-63-24M369 239c31 0 57 13 79 36M320 254c-25 4-46 13-64 27M365 257c24 17 42 40 55 69" fill="none" stroke="#241817" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <text x="256" y="472" text-anchor="middle" font-size="68" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="700" fill="#241817" letter-spacing="3">wowma</text>
+</svg>
