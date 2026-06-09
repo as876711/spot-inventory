@@ -99,7 +99,9 @@ h1 {
   font-size: clamp(54px, 10vw, 132px);
   line-height: 0.95;
   letter-spacing: 0;
+  overflow-wrap: normal;
 }
+.title-line { display: block; }
 h2 {
   margin: 0;
   font-size: clamp(28px, 4vw, 48px);
