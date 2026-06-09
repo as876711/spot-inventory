@@ -1,5 +1,4 @@
-const lineId = "@334lnlsn";
-const lineUrl = `https://line.me/R/oaMessage/${encodeURIComponent(lineId)}`;
+const lineUrl = "https://lin.ee/n2roMlP";
 
 const sampleItems = [
   {
@@ -97,8 +96,7 @@ function formatPrice(value) {
 }
 
 function buildLineLink(itemName) {
-  const message = encodeURIComponent(`你好，我想詢問「${itemName}」是否還有現貨，請問可以保留嗎？`);
-  return `${lineUrl}/?${message}`;
+  return lineUrl;
 }
 
 function escapeHtml(value) {
