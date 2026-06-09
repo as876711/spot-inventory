@@ -9,7 +9,7 @@ const sampleItems = [
     status: "available",
     price: 180,
     image: "./images/item-1.jpg",
-    tags: ["吊飾", "可售", "近新"],
+    tags: ["吊飾", "現貨", "近新"],
     condition: "近新品況，外觀乾淨，無明顯污漬或破損。",
     createdAt: "2026-06-01T10:00:00+08:00"
   },
@@ -26,8 +26,8 @@ const sampleItems = [
   },
   {
     id: "sample-3",
-    name: "寶可夢迷你公仔",
-    category: "寶可夢",
+    name: "拉拉熊迷你公仔",
+    category: "拉拉熊",
     status: "reserved",
     price: 150,
     image: "./images/item-3.jpg",
@@ -37,8 +37,8 @@ const sampleItems = [
   },
   {
     id: "sample-4",
-    name: "角色貼紙組",
-    category: "其他",
+    name: "蒙奇奇貼紙組",
+    category: "蒙奇奇",
     status: "available",
     price: 80,
     image: "./images/item-4.jpg",
@@ -48,32 +48,32 @@ const sampleItems = [
   },
   {
     id: "sample-5",
-    name: "毛絨玩偶吊牌款",
-    category: "其他",
+    name: "寶可夢毛絨玩偶吊牌款",
+    category: "寶可夢",
     status: "sold",
     price: 320,
     image: "./images/item-5.jpg",
-    tags: ["玩偶", "已售出"],
-    condition: "已售出，保留紀錄供參考，可詢問是否有類似商品。",
+    tags: ["玩偶", "完售"],
+    condition: "已完售，保留紀錄供參考，可詢問是否有類似商品。",
     createdAt: "2026-05-12T11:40:00+08:00"
   },
   {
     id: "sample-6",
-    name: "小卡與明信片套組",
-    category: "其他",
+    name: "史奴比小卡與明信片套組",
+    category: "史奴比",
     status: "available",
     price: 120,
     image: "./images/item-6.jpg",
-    tags: ["小卡", "紙品", "可售"],
+    tags: ["小卡", "紙品", "現貨"],
     condition: "收藏保存，邊角平整，套組不拆售。",
     createdAt: "2026-05-04T16:00:00+08:00"
   }
 ];
 
 const statusLabels = {
-  available: "可售",
+  available: "現貨",
   reserved: "保留",
-  sold: "售出"
+  sold: "完售"
 };
 
 const grid = document.querySelector("#productGrid");
@@ -93,11 +93,7 @@ lineLinks.forEach((link) => {
 });
 
 function formatPrice(value) {
-  return new Intl.NumberFormat("zh-TW", {
-    style: "currency",
-    currency: "TWD",
-    maximumFractionDigits: 0
-  }).format(value);
+  return `NT$${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value)}`;
 }
 
 function buildLineLink(itemName) {
@@ -171,7 +167,7 @@ function renderProducts() {
           <p class="condition">${escapeHtml(item.condition)}</p>
           <div class="price-row">
             <span class="price">${formatPrice(Number(item.price))}</span>
-            <a class="line-link ${isUnavailable ? "secondary" : ""}" href="${buildLineLink(item.name)}" target="_blank" rel="noreferrer">LINE 詢問這件</a>
+            <a class="line-link ${isUnavailable ? "secondary" : ""}" href="${buildLineLink(item.name)}" target="_blank" rel="noreferrer">Line 詢問</a>
           </div>
         </div>
       </article>

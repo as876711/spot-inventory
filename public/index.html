@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>現貨選物庫 | LINE 詢問保留</title>
-  <meta name="description" content="現貨選物清單，商品皆標示照片、價格、品況與狀態。看到喜歡的商品後，可直接用 LINE 詢問與保留。">
+  <title>WowMa 現貨挖寶區 | LINE 詢問保留</title>
+  <meta name="description" content="WowMa 現貨挖寶區，各種 IP 周邊、限定商品不定期更新，不用等待預購，喜歡直接帶回家。">
   <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -12,11 +12,11 @@
   <header class="site-header">
     <a class="brand" href="#top" aria-label="回到首頁">
       <span class="brand-mark">庫</span>
-      <span>現貨選物庫</span>
+      <span>WowMa 現貨挖寶區</span>
     </a>
     <nav class="site-nav" aria-label="主要導覽">
       <a href="#items">商品</a>
-      <a href="#trade">交易說明</a>
+      <a href="#trade">購買須知</a>
       <a href="./admin.html">登入</a>
     </nav>
   </header>
@@ -24,20 +24,19 @@
   <main id="top">
     <section class="hero">
       <div class="hero-content">
-        <p class="eyebrow">Ready Stock</p>
-        <h1>現貨選物庫</h1>
-        <p class="hero-copy">看到喜歡的商品後，直接點 LINE 詢問這件。我會確認商品狀態、保留方式、付款與出貨細節。</p>
+        <h1>WowMa 現貨挖寶區</h1>
+        <p class="hero-copy">✨各種 IP 周邊、限定商品不定期更新 ✨<br>不用等待預購，喜歡直接帶回家♥</p>
         <div class="hero-actions">
           <a class="button primary" href="#items">查看現貨</a>
-          <a class="button ghost" id="heroLineLink" href="#" target="_blank" rel="noreferrer">LINE 詢問現貨</a>
+          <a class="button ghost" id="heroLineLink" href="#" target="_blank" rel="noreferrer">Line 詢問</a>
         </div>
       </div>
     </section>
 
     <section class="inventory-bar" aria-label="庫存摘要">
-      <div><strong id="countAvailable">0</strong><span>可售</span></div>
+      <div><strong id="countAvailable">0</strong><span>現貨</span></div>
       <div><strong id="countReserved">0</strong><span>保留</span></div>
-      <div><strong id="countSold">0</strong><span>售出</span></div>
+      <div><strong id="countSold">0</strong><span>完售</span></div>
     </section>
 
     <section id="items" class="section">
@@ -48,7 +47,7 @@
         <div class="toolbar">
           <label class="search">
             <span aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="搜尋商品、分類、品況">
+            <input id="searchInput" type="search" placeholder="搜尋商品、分類">
           </label>
           <select id="sortSelect" aria-label="排序">
             <option value="featured">精選排序</option>
@@ -63,7 +62,10 @@
         <button class="filter active" data-filter="all" type="button">全部</button>
         <button class="filter" data-filter="三麗鷗" type="button">三麗鷗</button>
         <button class="filter" data-filter="吉伊卡哇" type="button">吉伊卡哇</button>
+        <button class="filter" data-filter="拉拉熊" type="button">拉拉熊</button>
+        <button class="filter" data-filter="蒙奇奇" type="button">蒙奇奇</button>
         <button class="filter" data-filter="寶可夢" type="button">寶可夢</button>
+        <button class="filter" data-filter="史奴比" type="button">史奴比</button>
         <button class="filter" data-filter="其他" type="button">其他</button>
       </div>
 
@@ -73,30 +75,17 @@
 
     <section id="trade" class="trade-section">
       <div class="trade-copy">
-        <p class="eyebrow">Trade Notes</p>
-        <h2>交易說明</h2>
-        <ol class="trade-steps">
-          <li>
-            <strong>詢問與保留</strong>
-            <span>看到喜歡的商品後，點商品卡上的 LINE 詢問這件。確認仍可售後才會替你保留，保留時間以 LINE 回覆為準。</span>
-          </li>
-          <li>
-            <strong>付款方式</strong>
-            <span>LINE 中確認總金額、付款方式與付款期限。商品以完成付款者優先。</span>
-          </li>
-          <li>
-            <strong>出貨規則</strong>
-            <span>完成付款後安排寄出或約定交付方式。運費、寄送方式與包裝需求會在 LINE 中一併確認。</span>
-          </li>
-        </ol>
+        <h2>購買須知</h2>
+        <p>欲選購之商品請透過官方 LINE 詢問，確認商品仍有庫存後，將協助保留商品。</p>
+        <p>商品保留期限、付款方式及出貨安排，皆以 LINE 回覆內容為準。</p>
       </div>
-      <a class="button primary" id="tradeLineLink" href="#" target="_blank" rel="noreferrer">加 LINE 詢問</a>
+      <a class="button primary" id="tradeLineLink" href="#" target="_blank" rel="noreferrer">Line 詢問</a>
     </section>
 
   </main>
 
   <footer class="site-footer">
-    <span>現貨選物庫</span>
+    <span>WowMa 現貨挖寶區</span>
     <div class="footer-links">
       <a id="footerLineLink" href="#" target="_blank" rel="noreferrer">LINE 聯絡</a>
       <a href="./admin.html">登入</a>

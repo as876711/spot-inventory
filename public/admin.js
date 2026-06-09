@@ -1,7 +1,7 @@
 const statusLabels = {
-  available: "可售",
+  available: "現貨",
   reserved: "保留",
-  sold: "售出"
+  sold: "完售"
 };
 
 const form = document.querySelector("#itemForm");
@@ -19,11 +19,7 @@ let items = [];
 let authenticated = false;
 
 function formatPrice(value) {
-  return new Intl.NumberFormat("zh-TW", {
-    style: "currency",
-    currency: "TWD",
-    maximumFractionDigits: 0
-  }).format(value);
+  return `NT$${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value)}`;
 }
 
 function escapeHtml(value) {
